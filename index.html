@@ -10,15 +10,20 @@
     <main>
       <header>
         <h1>To Do List</h1>
-        <input id="addInpt" placeholder="Add todo here" />
+        <input
+          id="addInpt"
+          placeholder="Add todo here"
+          autocomplete="off"
+          required
+        />
         <button id="addBtn">Add</button>
       </header>
       <section>
-        <ol id="todos">
+        <ul id="todos">
           <!--insert items here-->
-        </ol>
+        </ul>
       </section>
     </main>
-    <script href="main.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

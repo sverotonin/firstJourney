@@ -1,3 +1,4 @@
+
 const addBtn = document.getElementById("addBtn");
 const addInpt = document.getElementById("addInpt");
 const todos = document.getElementById("todos");
