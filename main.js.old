@@ -1,0 +1,30 @@
+const addBtn = document.getElementById("addBtn");
+const addInpt = document.getElementById("addInpt");
+const todoItems = document.getElementById("todoItems");
+let todos = [];
+
+addBtn.addEventListener("click", function () {
+  todoItems.innerHTML = "";
+  if (addInpt.value.trim() != "") {
+    todos.push(addInpt.value);
+  }
+  addInpt.value = "";
+  renderTodos();
+});
+
+function renderTodos() {
+  let todo = todos.length - 1;
+  while (todo >= 0) {
+    let list = document.createElement("li");
+    let remove = document.createElement("button");
+    list.textContent = todos[todo];
+    remove.textContent = "X";
+    todoItems.appendChild(list);
+    todoItems.appendChild(remove);
+    todo--;
+  }
+}
+
+remove.addEventListener("click", function () {
+  todoItems.splice();
+});
