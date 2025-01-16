@@ -1,48 +1,52 @@
-// State management
-const state = {
-  todos: [],
-};
+//state management
+let todos = [];
 
-// DOM elements
-const todoItems = document.getElementById("todoItems");
-const addInput = document.getElementById("addInpt");
-const addBtn = document.getElementById("addBtn");
+const addInpt = document.querySelector("#addInpt");
+const addBtn = document.querySelector("#addBtn");
+const todoList = document.querySelector("#todoList");
 
-// Core functions
-function addTodo() {
-  const value = addInput.value.trim();
-  if (!value) return;
+function add() {
+  if (addInpt.value.trim() !== "") {
+    todos = [...todos, addInpt.value.trim()];
+  }
 
-  state.todos.push(value);
-  addInput.value = "";
-  renderTodos();
+  console.log(todos);
+  addInpt.value = "";
+
+  render();
+}
+function render() {
+  todoList.replaceChildren();
+  for (let i = 0; i < todos.length; i++) {
+    const todoItem = document.createElement("li");
+    const edit = document.createElement("button");
+    const remove = document.createElement("button");
+    const text = document.createElement("span");
+
+    text.textContent = todos.at(i);
+    edit.textContent = "Edit";
+    remove.textContent = "Delete";
+    const index = todos.indexOf(text.textContent);
+
+    edit.onclick = () => change(index, "edit");
+    remove.onclick = () => change(index, "delete");
+
+    todoItem.append(text, edit, remove);
+    todoList.appendChild(todoItem);
+
+    console.log(todos.at(i));
+  }
 }
 
-function removeTodo(index) {
-  state.todos.splice(index, 1);
-  renderTodos();
+function change(index, action) {
+  if (action === "delete") {
+    todos.splice(index, 1);
+  } else if (action === "edit") {
+    addInpt.value = todos[index];
+    todos.splice(index, 1);
+    console.log("you are editing index: " + index);
+  }
+  render();
 }
 
-function renderTodos() {
-  todoItems.innerHTML = "";
-
-  state.todos.forEach((todo, index) => {
-    const li = document.createElement("li");
-    li.className = "todo-item";
-    li.textContent = todo;
-
-    const removeBtn = document.createElement("button");
-    removeBtn.className = "remove-btn";
-    removeBtn.textContent = "✕";
-    removeBtn.onclick = () => removeTodo(index);
-
-    li.appendChild(removeBtn);
-    todoItems.appendChild(li);
-  });
-}
-
-// Event bindings
-addBtn.addEventListener("click", addTodo);
-addInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") addTodo();
-});
+addBtn.addEventListener("click", add);
